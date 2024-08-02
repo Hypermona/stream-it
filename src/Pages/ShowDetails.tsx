@@ -2,13 +2,14 @@ import CircularRating from "@/components/CircularRating";
 import { IShow } from "@/components/ShowCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SHOW_DETAILS_URL } from "@/lib/constants";
 import { useMemo } from "react";
 import { Link, ScrollRestoration, useLoaderData } from "react-router-dom";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function showloader({ params }: any) {
   try {
-    const show = (await fetch(`https://api.tvmaze.com/shows/${params.showId}?embed=cast`)).json();
+    const show = (await fetch(`${SHOW_DETAILS_URL}/${params.showId}?embed=cast`)).json();
     return show;
   } catch (err) {
     console.log(err);

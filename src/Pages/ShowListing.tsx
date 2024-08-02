@@ -1,5 +1,6 @@
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ShowCard, { IShow } from "@/components/ShowCard";
+import { SHOWS_LIST_URL } from "@/lib/constants";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSwr from "swr";
 
@@ -16,10 +17,7 @@ const showListLoader = async (url: string) => {
 const ShowListing = () => {
   const [page, setPage] = useState(0);
   const [shows, setShows] = useState<IShow[]>([]);
-  const { data, isLoading } = useSwr<IShow[]>(
-    `https://api.tvmaze.com/shows?page=${page}`,
-    showListLoader
-  );
+  const { data, isLoading } = useSwr<IShow[]>(`${SHOWS_LIST_URL}?page=${page}`, showListLoader);
   const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {

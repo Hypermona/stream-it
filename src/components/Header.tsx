@@ -6,6 +6,7 @@ import { Card, CardContent } from "./ui/card";
 import { debounce } from "@/lib/utils";
 import TvIcon from "./TvIcon";
 import CloseIcon from "./CloseIcon";
+import { SHOWS_SEARCH_URL } from "@/lib/constants";
 
 function searchLoader(duration: number) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,10 +52,7 @@ function Header() {
   );
   const debouncedSearch = debounce(handleSearch, 1000);
 
-  const { data, isLoading } = useSWR<IsearchResult[]>(
-    `https://api.tvmaze.com/search/shows?q=${search}`,
-    fetcher
-  );
+  const { data, isLoading } = useSWR<IsearchResult[]>(`${SHOWS_SEARCH_URL}?q=${search}`, fetcher);
   const getReleaseYear = useCallback((date: string) => new Date(date).getFullYear(), []);
   return (
     <div className="sticky top-0 z-50">

@@ -14,7 +14,7 @@ const CircularRating = ({ rating, width = "14", height = "14" }: Props) => {
     <div
       className={`w-${width} h-${height} rounded-[50%] bg-black flex justify-center items-center`}
     >
-      <div className={`relative w-${width} h-${height}`}>
+      <div className={`relative w-14 h-14`}>
         <svg className={`w-${width} h-${height}`} viewBox="0 0 100 100">
           <circle
             className="text-gray-700 stroke-current"
