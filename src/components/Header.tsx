@@ -11,8 +11,11 @@ import { SHOWS_SEARCH_URL } from "@/lib/constants";
 function searchLoader(duration: number) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cache: Record<string, any> = {};
-  return async function (url: string) {
+  return async function (url: string, search: string) {
     try {
+      if (!search) {
+        return [];
+      }
       if (cache[url]) {
         console.log("served from cache", url);
         return cache[url];
@@ -52,12 +55,17 @@ function Header() {
   );
   const debouncedSearch = debounce(handleSearch, 1000);
 
-  const { data, isLoading } = useSWR<IsearchResult[]>(`${SHOWS_SEARCH_URL}?q=${search}`, fetcher);
+  const { data, isLoading } = useSWR<IsearchResult[]>(
+    `${SHOWS_SEARCH_URL}?q=${search}`,
+    (url: string) => fetcher(url, search)
+  );
   const getReleaseYear = useCallback((date: string) => new Date(date).getFullYear(), []);
   return (
     <div className="sticky top-0 z-50">
       <div className="flex justify-between  bg-[#042542] text-[#4EB1DE] p-5 ">
-        <h1 className="text-2xl tracking-tight font-extrabold">STREAM IT</h1>
+        <h1 className="text-2xl tracking-tight font-extrabold">
+          <Link to="/">STREAM IT</Link>
+        </h1>
         {open ? (
           <CloseIcon
             height={24}

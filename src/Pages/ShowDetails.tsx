@@ -23,15 +23,15 @@ const ShowDetails = () => {
   return (
     <>
       <div
-        className={`flex flex-wrap w-full bg-stone-800 text-white`}
+        className={`flex flex-wrap w-full bg-stone-800 text-white sm:items-center`}
         style={{
-          backgroundImage: `url(${show.image.original})`,
+          backgroundImage: `url(${show?.image?.original})`,
           backgroundBlendMode: "multiply",
         }}
       >
-        <div className="w-full sm:w-[20vw] shadow-none rounded-sm m-14 relative">
-          <Skeleton className="h-full w-full absolute " />
-          <img src={show.image.medium} width={300} alt={show.name} />
+        <div className="w-[300px] m-auto shadow-none rounded-sm sm:m-14 relative">
+          <Skeleton className="h-full w-full absolute z-[-10]" />
+          <img src={show?.image?.medium} width={300} alt={show.name} className="rounded-t-md " />
           <div className="p-2 bg-blue-950 rounded flex justify-center items-center">
             <img
               className="w-10 h-10 object-cover rounded-md"
@@ -42,7 +42,7 @@ const ShowDetails = () => {
               <p className="text-1xl font-medium mb-[-6px] tracking-tight text-gray-400">
                 Now Streaming
               </p>
-              <p className="text-1xl font-semibold tracking-tight">
+              <p className="text-1xl font-semibold tracking-tight cursor-pointer">
                 <Link to={show?.officialSite || "#"} target="_blank">
                   Watch Now
                 </Link>
@@ -50,8 +50,8 @@ const ShowDetails = () => {
             </div>
           </div>
         </div>
-        <div className="sm:w-[60vw] mt-10">
-          <div className="sm:mt-[20vh]">
+        <div className="sm:w-[60vw] m-2 mt-10 ml-5 mb-5 sm:my-14">
+          <div>
             <h2 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
               {show.name}
               <span className="text-gray-400 font-normal"> ({releaseYear}) </span>
@@ -72,18 +72,18 @@ const ShowDetails = () => {
         <h2 className="my-5 text-2xl font-normal">Series Cast</h2>
         <div className="flex gap-3 overflow-auto pb-3">
           {show?._embedded?.cast.map((cast, i) => (
-            <Card className="w-[180px]" key={cast.character.name + i}>
+            <Card className="w-[180px]" key={cast?.character?.name + i}>
               <div className=" w-[180px] h-[252px] relative">
                 <Skeleton className="h-full w-full absolute " />
                 <img
-                  src={cast.person.image.medium}
-                  alt={cast.person.name}
+                  src={cast?.person?.image?.medium}
+                  alt={cast?.person?.name}
                   className="rounded-t-md z-10"
                 />
               </div>
               <CardContent className="pt-4 px-2">
-                <p className="font-bold">{cast.person.name}</p>
-                <p>{cast.character.name}</p>
+                <p className="font-bold">{cast?.person?.name}</p>
+                <p>{cast?.character?.name}</p>
               </CardContent>
             </Card>
           ))}

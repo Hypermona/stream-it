@@ -17,19 +17,29 @@ const showListLoader = async (url: string) => {
 const ShowListing = () => {
   const [page, setPage] = useState(0);
   const [shows, setShows] = useState<IShow[]>([]);
-  const { data, isLoading } = useSwr<IShow[]>(`${SHOWS_LIST_URL}?page=${page}`, showListLoader);
+  const { data, isLoading, isValidating } = useSwr<IShow[]>(
+    `${SHOWS_LIST_URL}?page=${page}`,
+    showListLoader,
+    {
+      revalidateOnFocus: false,
+    }
+  );
   const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     if (data) {
-      setShows((prev) => [...prev, ...data]);
+      setShows([...shows, ...data]);
     }
+    () => {
+      setShows([]);
+      setPage(0);
+    };
   }, [data]);
 
   const lastShowRef = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (e: any) => {
-      if (isLoading) {
+      if (isLoading || !data?.length) {
         return;
       }
       if (observer.current) {
@@ -45,12 +55,12 @@ const ShowListing = () => {
         observer.current.observe(e);
       }
     },
-    [isLoading]
+    [isLoading, data?.length]
   );
 
   return (
     <>
-      <div className="flex flex-wrap justify-between m-auto gap-x-2 gap-y-10 w-[85vw] mt-10">
+      <div className="flex flex-wrap justify-start m-auto gap-x-4 gap-y-10 w-[85vw] mt-10">
         {shows?.map((show, index) => (
           <div ref={shows.length - 1 === index ? lastShowRef : null} key={`${show.id}`}>
             <ShowCard
@@ -62,11 +72,14 @@ const ShowListing = () => {
             />
           </div>
         ))}
-        {isLoading &&
+        {(isLoading || isValidating) &&
           Array(20)
             .fill(0)
             .map((_, index) => <LoadingSkeleton key={index} />)}
       </div>
+      {!isLoading && !data?.length && (
+        <p className="text-center text-muted-foreground mt-5">No More Data</p>
+      )}
     </>
   );
 };

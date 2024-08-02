@@ -1,7 +1,7 @@
 function Footer() {
   return (
-    <footer className="bg-[#042542] text-white">
-      <nav className="flex justify-center items-end p-10">
+    <footer className="bg-[#042542] text-white mt-5">
+      <nav className="flex justify-center items-end p-10 flex-wrap">
         <div className="flex items-end flex-col m-2 mr-5">
           <img
             src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
@@ -17,7 +17,7 @@ function Footer() {
           </a>
         </div>
 
-        <div className="flex items-start">
+        <div className="flex items-start flex-wrap">
           <div className="m-4">
             <h3 className="text-2xl font-bold">The Basics</h3>
             <ul>

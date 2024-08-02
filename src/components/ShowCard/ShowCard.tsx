@@ -40,9 +40,11 @@ export default function ShowCard({ id, name, rating, image, premiered }: Partial
   return useMemo(
     () => (
       <Card className="w-[200px] relative">
-        <Skeleton className="h-full w-full absolute z-[-1]" />
-        <Link to={`/shows/${id}`} className="h-[278px]">
-          <img src={image?.medium} alt="name" className="rounded-md" />
+        <Link to={`/shows/${id}`}>
+          <div className="h-[278px]">
+            <Skeleton className="h-full w-full absolute z-[-1]" />
+            <img src={image?.medium} alt="name" className="rounded-md" />
+          </div>
         </Link>
         <CardContent className="pt-8 relative">
           {rating?.average && (

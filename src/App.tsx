@@ -3,6 +3,7 @@ import ShowListing from "./Pages/ShowListing";
 import ShowDetails, { showloader } from "./Pages/ShowDetails";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import ErrorPage from "./Pages/Error";
 
 const Layout = () => {
   return (
@@ -20,6 +21,7 @@ function App() {
       id: "base",
       path: "/",
       element: <Layout />,
+      errorElement: <ErrorPage />,
       children: [
         {
           id: "home",
