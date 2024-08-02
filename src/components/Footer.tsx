@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-blue-950 text-white">
+    <footer className="bg-[#042542] text-white">
       <nav className="flex justify-center items-end p-10">
         <div className="flex items-end flex-col m-2 mr-5">
           <img

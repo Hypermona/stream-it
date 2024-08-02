@@ -2,11 +2,11 @@ import CircularRating from "@/components/CircularRating";
 import { IShow } from "@/components/ShowCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Link, useLoaderData } from "react-router-dom";
+import { useMemo } from "react";
+import { Link, ScrollRestoration, useLoaderData } from "react-router-dom";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function showloader({ params }: any) {
-  console.log(params);
   try {
     const show = (await fetch(`https://api.tvmaze.com/shows/${params.showId}?embed=cast`)).json();
     return show;
@@ -18,8 +18,7 @@ export async function showloader({ params }: any) {
 
 const ShowDetails = () => {
   const show = useLoaderData() as IShow;
-  console.log(show);
-  const releaseYear = new Date(show.premiered).getFullYear();
+  const releaseYear = useMemo(() => new Date(show.premiered).getFullYear(), [show.premiered]);
   return (
     <>
       <div
@@ -71,8 +70,8 @@ const ShowDetails = () => {
       <div className="my-10 mx-10">
         <h2 className="my-5 text-2xl font-normal">Series Cast</h2>
         <div className="flex gap-3 overflow-auto pb-3">
-          {show?._embedded?.cast.map((cast) => (
-            <Card className="w-[180px]">
+          {show?._embedded?.cast.map((cast, i) => (
+            <Card className="w-[180px]" key={cast.character.name + i}>
               <div className=" w-[180px] h-[252px] relative">
                 <Skeleton className="h-full w-full absolute " />
                 <img
@@ -89,6 +88,7 @@ const ShowDetails = () => {
           ))}
         </div>
       </div>
+      <ScrollRestoration />
     </>
   );
 };

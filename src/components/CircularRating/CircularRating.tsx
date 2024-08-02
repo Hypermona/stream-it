@@ -2,19 +2,23 @@
 
 type Props = {
   rating: number;
+  width?: string;
+  height?: string;
 };
 
-const CircularRating = ({ rating }: Props) => {
+const CircularRating = ({ rating, width = "14", height = "14" }: Props) => {
   const percentRate = rating * 10;
   const strokeColor =
     percentRate >= 70 ? "text-green-600" : percentRate >= 40 ? "text-yellow-600" : "text-red-600";
   return (
-    <div className="w-14 h-14 rounded-[50%] bg-black flex justify-center items-center">
-      <div className="relative w-14 h-14">
-        <svg className="w-14 h-14" viewBox="0 0 100 100">
+    <div
+      className={`w-${width} h-${height} rounded-[50%] bg-black flex justify-center items-center`}
+    >
+      <div className={`relative w-${width} h-${height}`}>
+        <svg className={`w-${width} h-${height}`} viewBox="0 0 100 100">
           <circle
             className="text-gray-700 stroke-current"
-            stroke-width="6"
+            strokeWidth="6"
             cx="50"
             cy="50"
             r="40"
@@ -27,23 +31,23 @@ const CircularRating = ({ rating }: Props) => {
               transformOrigin: "50% 50%",
             }}
             className={strokeColor + " progress-ring__circle stroke-current"}
-            stroke-width="6"
-            stroke-linecap="round"
+            strokeWidth="6"
+            strokeLinecap="round"
             cx="50"
             cy="50"
             r="40"
             fill="transparent"
-            stroke-dasharray="251.2"
-            stroke-dashoffset={`calc(251.2px - (251.2px * ${percentRate}) / 100)`}
+            strokeDasharray="251.2"
+            strokeDashoffset={`calc(251.2px - (251.2px * ${percentRate}) / 100)`}
           ></circle>
 
           <text
             x="45"
             y="55"
-            font-family="Tahoma, sans-serif"
-            font-size="35"
-            text-anchor="middle"
-            alignment-baseline="middle"
+            fontFamily="Tahoma, sans-serif"
+            fontSize="35"
+            textAnchor="middle"
+            alignmentBaseline="middle"
             fill="white"
             fontWeight={"bold"}
           >
@@ -52,8 +56,8 @@ const CircularRating = ({ rating }: Props) => {
           <text
             x="65"
             y="50"
-            font-family="Tahoma, sans-serif"
-            font-size="20"
+            fontFamily="Tahoma, sans-serif"
+            fontSize="20"
             fill="gray"
             fontWeight={"bold"}
           >
