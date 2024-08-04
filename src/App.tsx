@@ -7,11 +7,11 @@ import ErrorPage from "./Pages/Error";
 
 const Layout = () => {
   return (
-    <>
+    <div className="overflow-hidden">
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 };
 
