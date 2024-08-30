@@ -1,3 +1,14 @@
+create a .env file and add `VITE_BASE_URL=https://api.tvmaze.com `
+
+## Features
+ - Virtualization
+ - Lazy Loading
+ - Infinite Loading
+ - Request Caching
+ - React Router 6
+ - Debounce
+ - Themes
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

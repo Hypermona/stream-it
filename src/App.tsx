@@ -7,7 +7,7 @@ import ErrorPage from "./Pages/Error";
 
 const Layout = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-background">
       <Header />
       <Outlet />
       <Footer />

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchIcon from "./SearchIcon";
 import useSWR from "swr";
 import { Link } from "react-router-dom";
@@ -45,8 +45,19 @@ interface IsearchResult {
 }
 
 function Header() {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+
+  const switchTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+      localStorage.setItem("theme", "light");
+    } else {
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    }
+  };
   const handleSearch = useCallback(
     (e: React.ChangeEvent<HTMLFormElement>) => {
       setSearch(e?.target?.value);
@@ -59,6 +70,25 @@ function Header() {
     `${SHOWS_SEARCH_URL}?q=${search}`,
     (url: string) => fetcher(url, search)
   );
+
+  useEffect(() => {
+    const root = document.getElementById("root");
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefer-color-scheme:dark)").matches
+        ? "dark"
+        : "light";
+      if (systemTheme === "dark") {
+        root?.classList.add("dark");
+      } else {
+        root?.classList.remove("dark");
+      }
+    } else if (theme === "dark") {
+      root?.classList.add("dark");
+    } else {
+      root?.classList.remove("dark");
+    }
+  }, [theme]);
+
   const getReleaseYear = useCallback((date: string) => new Date(date).getFullYear(), []);
   return (
     <div className="sticky top-0 z-50">
@@ -66,23 +96,26 @@ function Header() {
         <h1 className="text-2xl tracking-tight font-extrabold">
           <Link to="/">STREAM IT</Link>
         </h1>
-        {open ? (
-          <CloseIcon
-            height={24}
-            width={24}
-            fill="#4EB1DE"
-            onClick={() => setOpen((prev) => !prev)}
-            className="cursor-pointer"
-          />
-        ) : (
-          <SearchIcon
-            height={24}
-            width={24}
-            fill="#4EB1DE"
-            onClick={() => setOpen((prev) => !prev)}
-            className="cursor-pointer"
-          />
-        )}
+        <div className="flex gap-x-3">
+          <div onClick={switchTheme}>{theme === "dark" ? "dark" : "light"}</div>
+          {open ? (
+            <CloseIcon
+              height={24}
+              width={24}
+              fill="#4EB1DE"
+              onClick={() => setOpen((prev) => !prev)}
+              className="cursor-pointer"
+            />
+          ) : (
+            <SearchIcon
+              height={24}
+              width={24}
+              fill="#4EB1DE"
+              onClick={() => setOpen((prev) => !prev)}
+              className="cursor-pointer"
+            />
+          )}
+        </div>
       </div>
 
       <Card className={`${open ? "block" : "hidden"} sticky top-0 z-20`}>
